@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Supreme Battle League</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#1b1235;--bg2:#271a4a;--ink:#f4efe6;--mut:#a99fc4;--gold:#f6b700;--red:#e8433f;--ok:#3ecf8e;--line:#3b2c69}
+:root:not([data-theme="light"]){color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Barlow,system-ui,sans-serif}
+h1,h2,h3,.tab{font-family:Rajdhani,sans-serif;margin:0}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 5vw;background:var(--bg2);border-bottom:2px solid var(--gold);flex-wrap:wrap;gap:8px}
+.logo{font:700 22px Rajdhani;letter-spacing:.5px}.logo b{color:var(--gold)}
+nav{display:flex;gap:6px}
+.tab{background:none;border:1px solid var(--line);color:var(--ink);padding:8px 16px;font-size:17px;font-weight:600;border-radius:4px;cursor:pointer}
+.tab.on{background:var(--gold);color:#1b1235;border-color:var(--gold)}
+.tab:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+main{max-width:1000px;margin:0 auto;padding:28px 5vw 60px}
+.hero{position:relative;margin:0 -5vw 26px;padding:64px 5vw 52px;background:radial-gradient(ellipse at 85% 0,#5b2fa8 0,transparent 55%),linear-gradient(135deg,#2a1856 0,#1b1235 70%);border-bottom:1px solid var(--line);overflow:hidden}
+.hero:before{content:"";position:absolute;right:-8%;top:-30%;width:46%;height:180%;background:linear-gradient(90deg,transparent,rgba(246,183,0,.14),transparent);transform:rotate(18deg)}
+.hero>*{position:relative}
+.own{display:inline-block;border:1px solid var(--gold);color:var(--gold);padding:5px 14px;border-radius:30px;font:600 15px Rajdhani;letter-spacing:.5px;margin-bottom:18px;animation:rise .8s both}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.own,.hero h1{animation:none}}
+.slots{max-width:420px;margin:0 0 24px}.slots .b{height:10px;background:var(--line);border-radius:6px;overflow:hidden}.slots .b i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--red))}.slots p{margin:6px 0 0;color:var(--mut);font-size:15px}
+footer{text-align:center;color:var(--mut);padding:26px 5vw 40px;border-top:1px solid var(--line);font-size:15px}footer b{color:var(--gold)}
+.hero h1{font-size:clamp(52px,12vw,116px);line-height:.9;font-weight:700;text-transform:uppercase;letter-spacing:-1px;animation:rise .9s .1s both}
+.hero h1 span{display:block;color:transparent;-webkit-text-stroke:2px var(--gold)}
+.hero p{color:#cfc6e6;max-width:46ch;margin:18px 0 24px;font-size:18px}
+.btn{background:var(--gold);color:#1b1235;border:0;padding:12px 22px;font:700 18px Rajdhani;border-radius:4px;cursor:pointer}
+.btn.red{background:var(--red);color:#fff}.btn.ghost{background:none;border:1px solid var(--line);color:var(--ink)}
+.stats{display:flex;gap:28px;flex-wrap:wrap;margin:8px 0 28px;border-left:4px solid var(--gold);padding-left:16px}
+.stats div{font:700 34px Rajdhani}.stats small{display:block;font:500 15px Barlow;color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.team{background:var(--bg2);border:1px solid var(--line);padding:14px;border-radius:6px}
+.team .top{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.lg{width:54px;height:54px;border-radius:6px;object-fit:cover;background:var(--line);display:grid;place-items:center;font:700 22px Rajdhani;color:var(--gold);flex:none}
+.team h3{font-size:22px}.st{font-size:14px;font-weight:500}
+.st.approved{color:var(--ok)}.st.pending{color:var(--gold)}.st.rejected{color:var(--red)}
+.team ul{margin:0;padding-left:18px;color:var(--mut);font-size:15px}
+form{display:grid;gap:12px}
+label{display:grid;gap:4px;font-weight:500;font-size:15px;color:var(--mut)}
+input{background:var(--bg);border:1px solid var(--line);color:var(--ink);padding:10px;border-radius:4px;font:inherit;width:100%}
+.pl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:var(--bg2);padding:12px;border-radius:6px;border:1px solid var(--line)}
+.pl h3{grid-column:1/-1;font-size:18px}
+@media(max-width:620px){.pl{grid-template-columns:1fr}}
+.msg{padding:10px 14px;border-radius:4px;background:var(--bg2);border-left:4px solid var(--gold);margin-bottom:16px}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:860px}
+th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:15px}
+th{font:600 16px Rajdhani;color:var(--gold)}
+.acts{display:flex;gap:6px;flex-wrap:wrap}.acts .btn{font-size:15px;padding:6px 12px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;align-items:center}
+.bar input{max-width:260px}
+.pay{background:var(--bg2);border:1px solid var(--gold);border-radius:6px;padding:16px}.pay h3{color:var(--gold);font-size:22px;margin-bottom:6px}
+.pay .num{font:700 30px Rajdhani;letter-spacing:1px}.pay p{margin:2px 0;color:#cfc6e6}
+.shot{width:64px;height:64px;object-fit:cover;border-radius:4px;border:1px solid var(--line);cursor:zoom-in}
+.ov{position:fixed;inset:0;background:rgba(10,5,25,.92);display:grid;place-items:center;z-index:9;padding:20px;cursor:zoom-out}.ov img{max-width:100%;max-height:100%}
+.empty{color:var(--mut);padding:24px 0}
+</style></head><body>
+<header><div class="logo">SUPREME <b>BATTLE</b> LEAGUE</div>
+<nav><button class="tab on" data-v="home">Teams</button><button class="tab" data-v="reg">Register</button><button class="tab" data-v="admin">Admin</button></nav></header>
+<main id="app"></main>
+<footer>Owner: <b>Supreme Gaming 308</b> &middot; Supreme Battle League</footer>
+<script>
+const ADMIN_PASS="01092009"; // yahan apna password badal lo
+const MAX_TEAMS=12;
+const ENTRY_FEE="Rs 300";
+const FORM_URL="https://www.cognitoforms.com/AtifAli3/SupremeBattleLeagueTeamRegistration2"; // entry fee likho, jaise "Rs 500". Khali chhora to nahi dikhegi // slots ki hadd, badal sakte ho
+let ask=null,teams=[],view="home",note="",isAdmin=false,q="",store=null,db=null,col=null;
+const $=s=>document.querySelector(s),esc=t=>String(t??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function lsGet(){try{return JSON.parse(localStorage.getItem("sbl")||"[]")}catch(e){return[]}}
+function lsSet(){try{localStorage.setItem("sbl",JSON.stringify(teams))}catch(e){}}
+async function init(){
+  render();
+  try{
+    db=await claude.use("db");
+    if(db){col=db.collection("teams");col.onSnapshot(s=>{teams=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.at-b.at);render()},()=>{});return}
+  }catch(e){}
+  teams=lsGet();render();
+}
+async function save(t){
+  if(col){try{await col.doc(t.id).set(t);return true}catch(e){note="Save nahi hua: is page par likhne ki ijazat nahi hai.";return false}}
+  teams=teams.filter(x=>x.id!==t.id);teams.push(t);lsSet();return true;
+}
+async function del(id){
+  if(col){try{await col.doc(id).delete()}catch(e){note="Delete nahi hua.";render()}}
+  else{teams=teams.filter(x=>x.id!==id);lsSet();render()}
+}
+function logoEl(t){return t.logo?`<img class="lg" src="${t.logo}" alt="${esc(t.name)} logo">`:`<div class="lg">${esc((t.name||"?")[0].toUpperCase())}</div>`}
+function card(t){
+  return `<div class="team"><div class="top">${logoEl(t)}<div><h3>${esc(t.name)}</h3><span class="st ${t.status}">${t.status}</span></div></div>
+  <ul>${t.players.map(p=>`<li>${esc(p.ff)}${isAdmin?` &middot; UID ${esc(p.uid)}`:""}</li>`).join("")}</ul></div>`;
+}
+function home(){
+  const ok=teams.filter(t=>t.status==="approved").length,pend=teams.filter(t=>t.status==="pending").length;
+  const act=teams.filter(t=>t.status!=="rejected").length;
+  return `${note?`<div class="msg" style="margin-top:20px">${esc(note)}</div>`:""}<section class="hero"><div class="own">Owner: Supreme Gaming 308</div><h1>Supreme<span>Battle League</span></h1>
+  <p>Free Fire squad tournament. Sirf ${MAX_TEAMS} slots hain. Apni team ke 5 players register karo aur slot pakka karo.</p>
+  <div class="slots"><div class="b"><i style="width:${Math.min(100,act/MAX_TEAMS*100)}%"></i></div><p>${act} / ${MAX_TEAMS} slots bhar chuke</p></div>
+  <button class="btn" data-go="reg">${act>=MAX_TEAMS?"Slots full":"Register karo"}</button></section>
+  <div class="stats"><div>${teams.length}<small>Total teams</small></div><div>${teams.length*5}<small>Total players</small></div><div>${ok}<small>Approved</small></div><div>${pend}<small>Pending</small></div><div>${Math.max(0,MAX_TEAMS-act)}<small>Slots baqi</small></div></div>
+  <h2>Registered teams</h2><br>
+  ${teams.length?`<div class="grid">${teams.filter(t=>t.status!=="rejected").map(card).join("")}</div>`:`<p class="empty">Abhi koi team register nahi hui. Pehli team aap ban jao.</p>`}`;
+}
+function reg(){
+  const act=teams.filter(t=>t.status!=="rejected").length,full=act>=MAX_TEAMS;
+  return `<h2>Team registration</h2><br>
+  <div class="pay"><h3>${full?"Slots full":"Register your team"}</h3>
+  ${full?`<p>Saare ${MAX_TEAMS} slots bhar chuke hain.</p>`:`
+  <p>Team name, 5 players (real name, Free Fire name, UID), captain ka phone/email, aur entry fee ${esc(ENTRY_FEE)} bhejne wale account ka naam/number is form mein bharo.</p>
+  <p>JazzCash: <b>03285877064</b> &middot; Account name: <b>Atif Ali</b></p>
+  <a class="btn" href="${FORM_URL}" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none;margin-top:8px">Registration form kholo</a>
+  <p style="color:var(--mut);font-size:14px;margin-top:10px">Form submit karne ke baad admin payment check karke aap ki team approve kar dega.</p>`}
+  </div>`;
+}
+function admin(){
+  if(!isAdmin)return `<h2>Admin login</h2><br>${note?`<div class="msg">${esc(note)}</div>`:""}<form id="lf"><label>Password<input name="pw" type="password" required></label><button class="btn" type="submit">Login</button></form>`;
+  const list=teams.filter(t=>(t.name+t.players.map(p=>p.ff+p.rn+p.uid).join()).toLowerCase().includes(q.toLowerCase()));
+  return `<h2>Admin panel</h2>${note?`<div class="msg">${esc(note)}</div>`:""}
+  ${ask?`<div class="msg" style="border-color:var(--red)"><b>${ask.t==="reset"?"Saari teams aur data hamesha ke liye delete ho jayega. Pakka reset karna hai?":"Ye team delete karni hai?"}</b><div class="acts" style="margin-top:8px"><button class="btn red" data-a="yes">Haan, ${ask.t==="reset"?"reset karo":"delete karo"}</button><button class="btn ghost" data-a="no">Cancel</button></div></div>`:""}
+  <div class="stats"><div>${teams.length}<small>Teams</small></div><div>${teams.length*5}<small>Players</small></div><div>${teams.filter(t=>t.status==="approved").length}<small>Approved</small></div><div>${teams.filter(t=>t.status==="pending").length}<small>Pending</small></div></div>
+  <div class="bar"><input id="q" placeholder="Team ya player dhoondo" value="${esc(q)}"><button class="btn ghost" data-a="csv">CSV copy</button><button class="btn red" data-a="reset">Reset all</button><button class="btn ghost" data-a="out">Logout</button></div>
+  ${list.length?`<div class="tbl"><table><tr><th>Team</th><th>Players (Real Name / FF name / UID)</th><th>Captain contact</th><th>Payment</th><th>Status</th><th>Action</th></tr>
+  ${list.map(t=>`<tr><td><div class="top" style="display:flex;gap:10px;align-items:center">${logoEl(t)}<b>${esc(t.name)}</b></div></td>
+  <td>${t.players.map((p,i)=>`${i===0?"<b>Captain:</b> ":""}${esc(p.rn)} / ${esc(p.ff)} / ${esc(p.uid)}`).join("<br>")}</td>
+  <td>${esc(t.players[0].phone)}<br>${esc(t.players[0].email)}</td>
+  <td>${t.pay?`<img class="shot" src="${t.pay}" data-shot="${t.id}" alt="Payment screenshot">`:"Nahi mila"}<br>${esc(t.payer||"")}<br>${esc(t.from||"")}</td>
+  <td class="st ${t.status}">${t.status}</td>
+  <td><div class="acts"><button class="btn" data-a="approved" data-id="${t.id}">Approve</button><button class="btn ghost" data-a="rejected" data-id="${t.id}">Reject</button><button class="btn red" data-a="del" data-id="${t.id}">Delete</button></div></td></tr>`).join("")}</table></div>`:`<p class="empty">Koi team nahi mili.</p>`}`;
+}
+function render(){
+  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("on",b.dataset.v===view));
+  $("#app").innerHTML=view==="home"?home():view==="reg"?reg():admin();
+  const f=$("#f");if(f)f.onsubmit=submit;
+  const lf=$("#lf");if(lf)lf.onsubmit=e=>{e.preventDefault();if(new FormData(lf).get("pw")===ADMIN_PASS){isAdmin=true;note=""}else note="Password ghalat hai.";render()};
+  const qi=$("#q");if(qi)qi.oninput=e=>{q=e.target.value;render();const n=$("#q");n.focus();n.setSelectionRange(q.length,q.length)};
+}
+function shot(file){return new Promise(res=>{const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const k=Math.min(1,720/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=i.width*k;c.height=i.height*k;c.getContext("2d").drawImage(i,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",.6))};i.onerror=()=>res("");i.src=r.result};r.onerror=()=>res("");r.readAsDataURL(file)})}
+function shrink(file){return new Promise(res=>{if(!file||!file.size)return res("");const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const c=document.createElement("canvas");c.width=c.height=96;const x=c.getContext("2d"),s=Math.min(i.width,i.height);x.drawImage(i,(i.width-s)/2,(i.height-s)/2,s,s,0,0,96,96);res(c.toDataURL("image/jpeg",.8))};i.onerror=()=>res("");i.src=r.result};r.onerror=()=>res("");r.readAsDataURL(file)})}
+async function submit(e){
+  e.preventDefault();const fd=new FormData(e.target);const uids=[];const players=[];
+  for(let i=1;i<=5;i++){const uid=fd.get("uid"+i).trim();uids.push(uid);players.push(i===1?{rn:fd.get("rn1").trim(),ff:fd.get("ff1").trim(),uid,phone:fd.get("ph").trim(),email:fd.get("em").trim()}:{rn:fd.get("rn"+i).trim(),ff:fd.get("ff"+i).trim(),uid})}
+  if(teams.filter(t=>t.status!=="rejected").length>=MAX_TEAMS){note="Saare 12 slots bhar chuke hain.";return render()}
+  const all=teams.flatMap(t=>t.players.map(p=>p.uid));
+  if(new Set(uids).size<5||uids.some(u=>all.includes(u))){note="Koi UID dobara use hui hai. Har player ki UID alag aur nayi honi chahiye.";return render()}
+  if(teams.some(t=>t.name.toLowerCase()===fd.get("tn").trim().toLowerCase())){note="Ye team naam pehle se maujood hai.";return render()}
+  const ssf=fd.get("ss");if(!ssf||!ssf.size){note="Payment ka screenshot zaroori hai.";return render()}
+  const t={id:"t"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),name:fd.get("tn").trim(),logo:await shrink(fd.get("lg")),pay:await shot(fd.get("ss")),payer:fd.get("pn").trim(),from:fd.get("pf").trim(),players,status:"pending",at:Date.now()};
+  if(!t.pay){note="Screenshot parha nahi gaya. Dusri image try karo.";return render()}
+  if(await save(t)){note="";view="home";note="Team register ho gayi. Admin approval ka intezar karo."}
+  render();
+}
+document.addEventListener("click",async e=>{
+  const im=e.target.closest("[data-shot]");if(im){const t=teams.find(x=>x.id===im.dataset.shot);if(t){const o=document.createElement("div");o.className="ov";o.innerHTML=`<img src="${t.pay}" alt="Payment screenshot">`;o.onclick=()=>o.remove();document.body.appendChild(o)}return}
+  const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.v){view=b.dataset.v;note="";return render()}
+  if(b.dataset.go){view=b.dataset.go;return render()}
+  const a=b.dataset.a;if(!a)return;
+  if(a==="cp"){try{await navigator.clipboard.writeText("03285877064");b.textContent="Copy ho gaya"}catch(_){b.textContent="03285877064"}return}
+  if(a==="out"){isAdmin=false;return render()}
+  if(a==="csv"){const rows=[["Team","Status","Real Name","FF name","UID","Phone","Email","Payer name","Paid from"]];teams.forEach(t=>t.players.forEach(p=>rows.push([t.name,t.status,p.rn,p.ff,p.uid,p.phone||"",p.email||"",t.payer||"",t.from||""])));
+    const txt=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(",")).join("\n");
+    try{await navigator.clipboard.writeText(txt);note="CSV copy ho gayi. Excel ya Sheets mein paste karo."}catch(_){note="Copy nahi hui."}return render()}
+  if(a==="reset"){ask=teams.length?{t:"reset"}:null;note=teams.length?"":"Reset karne ke liye koi data nahi hai.";return render()}
+  if(a==="del"){ask={t:"del",id:b.dataset.id};note="";return render()}
+  if(a==="no"){ask=null;return render()}
+  if(a==="yes"&&ask){const k=ask;ask=null;let fail=0;
+    const ids=k.t==="reset"?teams.map(t=>t.id):[k.id];
+    for(const id of ids){if(col){try{await col.doc(id).delete()}catch(_){fail++}}}
+    if(!col){teams=teams.filter(t=>!ids.includes(t.id));lsSet()}
+    note=fail?"Kuch teams delete nahi hui. Ye page shayad sirf dekhne ke liye khula hai, owner account se kholo.":(k.t==="reset"?"Sab reset ho gaya. Ab 12 slots khali hain.":"Team delete ho gayi.");
+    return render()}
+  const t=teams.find(x=>x.id===b.dataset.id);if(t){t.status=a;await save(t);render()}
+});
+init();
+</script></body></html>
