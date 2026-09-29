@@ -68,9 +68,7 @@ const ADMIN_PASS="01092009"; // yahan apna password badal lo
 const MAX_TEAMS=12;
 const ENTRY_FEE="Rs 300";
 const FORM_URL="https://www.cognitoforms.com/AtifAli3/SupremeBattleLeagueTeamRegistration2"; // entry fee likho, jaise "Rs 500". Khali chhora to nahi dikhegi // slots ki hadd, badal sakte ho
-const SYNCED_TEAMS=[
-  {id:"sync4",name:"343445",players:[{ff:"324234"},{ff:"324234"},{ff:"324234"},{ff:"324324"},{ff:"235235"}],status:"approved"}
-];
+const SYNCED_TEAMS=[];
 let ask=null,teams=[],view="home",note="",isAdmin=false,q="",store=null,db=null,col=null;
 const $=s=>document.querySelector(s),esc=t=>String(t??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function lsGet(){try{return JSON.parse(localStorage.getItem("sbl")||"[]")}catch(e){return[]}}
