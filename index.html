@@ -68,17 +68,21 @@ const ADMIN_PASS="01092009"; // yahan apna password badal lo
 const MAX_TEAMS=12;
 const ENTRY_FEE="Rs 300";
 const FORM_URL="https://www.cognitoforms.com/AtifAli3/SupremeBattleLeagueTeamRegistration2"; // entry fee likho, jaise "Rs 500". Khali chhora to nahi dikhegi // slots ki hadd, badal sakte ho
+const SYNCED_TEAMS=[
+  {id:"sync4",name:"343445",players:[{ff:"324234"},{ff:"324234"},{ff:"324234"},{ff:"324324"},{ff:"235235"}],status:"approved"}
+];
 let ask=null,teams=[],view="home",note="",isAdmin=false,q="",store=null,db=null,col=null;
 const $=s=>document.querySelector(s),esc=t=>String(t??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function lsGet(){try{return JSON.parse(localStorage.getItem("sbl")||"[]")}catch(e){return[]}}
 function lsSet(){try{localStorage.setItem("sbl",JSON.stringify(teams))}catch(e){}}
 async function init(){
+  teams=[...SYNCED_TEAMS];
   render();
   try{
     db=await claude.use("db");
-    if(db){col=db.collection("teams");col.onSnapshot(s=>{teams=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.at-b.at);render()},()=>{});return}
+    if(db){col=db.collection("teams");col.onSnapshot(s=>{teams=[...SYNCED_TEAMS,...s.docs.map(d=>({id:d.id,...d.data()}))].sort((a,b)=>(a.at||0)-(b.at||0));render()},()=>{});return}
   }catch(e){}
-  teams=lsGet();render();
+  teams=[...SYNCED_TEAMS,...lsGet()];render();
 }
 async function save(t){
   if(col){try{await col.doc(t.id).set(t);return true}catch(e){note="Save nahi hua: is page par likhne ki ijazat nahi hai.";return false}}
